@@ -16,9 +16,9 @@
 	import { deleteTasks } from '$lib/apis/tasks';
 
 	let project = '';
-	$: setProject($selectedProjectIndex);
+	$: setProject($projects.length, $selectedProjectIndex);
 
-	function setProject(value) {
+	function setProject(length, value) {
 		project = $projects[value]?.name || '';
 	}
 
@@ -81,9 +81,9 @@
 	}
 </script>
 
-{#if $projects[$selectedProjectIndex]}
+{#if project}
 	<div>
-		<h5>{$projects[$selectedProjectIndex]?.name}</h5>
+		<h5>{project}</h5>
 		<span>
 			<IconButton class="material-icons" on:click={() => (open = true)}>edit</IconButton>
 			<IconButton class="material-icons" on:click={() => (openDelete = true)} style="color: red">

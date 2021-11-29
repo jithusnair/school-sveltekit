@@ -56,8 +56,11 @@
 				},
 				...$projects
 			];
+			if ($projects.length === 1) $selectedProjectIndex = 0;
+			project = '';
 			isLoading = false;
 			open = false;
+			$leftDrawerOpen = false;
 		} catch (error) {
 			isLoading = false;
 			console.error(error);
