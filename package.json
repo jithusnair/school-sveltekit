@@ -49,6 +49,7 @@
   },
   "type": "module",
   "dependencies": {
+    "encoding": "^0.1.13",
     "firebase": "^9.5.0"
   }
 }
