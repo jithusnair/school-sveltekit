@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Drawer, { Content as DrawerContent, Header, Title as DrawerTitle } from '@smui/drawer';
+	import Drawer, { Content as DrawerContent, Header } from '@smui/drawer';
 	import List, { Item, Text, Meta } from '@smui/list';
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import IconButton from '@smui/icon-button';
@@ -13,7 +13,7 @@
 	import Textfield from '@smui/textfield';
 	import CircularProgress from '@smui/circular-progress';
 
-	import { leftDrawerOpen } from '$lib/store/drawers';
+	import { leftDrawerOpen, smallScreen } from '$lib/store/drawers';
 	import { user } from '$lib/store/user';
 	import { projects, selectedProjectIndex } from '$lib/store/data';
 
@@ -60,7 +60,7 @@
 			project = '';
 			isLoading = false;
 			open = false;
-			$leftDrawerOpen = false;
+			$leftDrawerOpen = $smallScreen ? false : true;
 		} catch (error) {
 			isLoading = false;
 			console.error(error);
@@ -71,8 +71,9 @@
 </script>
 
 <Drawer fixed={false} variant="modal" bind:open={$leftDrawerOpen}>
-	<Header>
-		<DrawerTitle>Projects</DrawerTitle>
+	<Header style="display: flex; justify-content: space-between; align-items: center">
+		<h6 style="margin: 16px 0">Projects</h6>
+		<IconButton on:click={() => (open = true)} mini class="material-icons">add</IconButton>
 	</Header>
 	<DrawerContent>
 		<List>
@@ -86,12 +87,6 @@
 			{/each}
 		</List>
 	</DrawerContent>
-	<List>
-		<Item on:click={() => (open = true)}>
-			<Text>Add New Project</Text>
-			<Meta class="material-icons">add</Meta>
-		</Item>
-	</List>
 </Drawer>
 
 <Dialog bind:open aria-labelledby="Add project">
