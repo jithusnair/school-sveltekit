@@ -11,8 +11,8 @@
 
 	onAuthStateChanged(getAuth(app), async (userData) => {
 		if (userData) {
-			await goto('/dashboard', { replaceState: true });
 			$user = userData;
+			await goto('/dashboard', { replaceState: true });
 		} else {
 			await goto('/login', { replaceState: true });
 		}
