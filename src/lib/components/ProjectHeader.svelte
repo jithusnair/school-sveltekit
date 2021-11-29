@@ -83,7 +83,7 @@
 
 {#if project}
 	<div>
-		<h5>{project}</h5>
+		<h1 style="padding: 0 16px; font-size: 1.25rem; font-weight: 500; line-height: 2">{project}</h1>
 		<span>
 			<IconButton class="material-icons" on:click={() => (open = true)}>edit</IconButton>
 			<IconButton class="material-icons" on:click={() => (openDelete = true)} style="color: red">
@@ -92,9 +92,11 @@
 		</span>
 	</div>
 {:else if $projects.length === 0}
-	<h5 style="padding: 0 16px">There are no projects or tasks to display</h5>
-	<p style="padding: 0 16px">
-		Create a project by clicking the <strong>Add New Project</strong> button on the left hand drawer
+	<h1 style="padding: 0 16px; font-size: 1.25rem; font-weight: 500; line-height: 2">
+		There are no projects or tasks to display
+	</h1>
+	<p style="padding: 0 16px;">
+		Create a project by clicking the <strong>+</strong> button in the left panel
 	</p>
 {/if}
 
