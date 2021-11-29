@@ -6,7 +6,7 @@
 	import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
 	import IconButton from '@smui/icon-button';
 
-	import { leftDrawerOpen, smallScreen, smallScreen } from '$lib/store/drawers';
+	import { leftDrawerOpen, smallScreen } from '$lib/store/drawers';
 	import { darkMode } from '$lib/store/settings';
 
 	export let hideTopBar = false;
@@ -14,6 +14,9 @@
 	let showDrawerButton = false;
 
 	onMount(() => {
+		let darkModeStored = window.localStorage.getItem('darkMode');
+		$darkMode = darkModeStored ? darkModeStored : 'yes';
+
 		let media = window.matchMedia('(min-width: 768px)');
 
 		toggleDrawer(media);
