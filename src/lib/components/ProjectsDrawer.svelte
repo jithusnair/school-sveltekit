@@ -70,7 +70,7 @@
 	}
 </script>
 
-<Drawer fixed variant="dismissible" bind:open={$leftDrawerOpen}>
+<Drawer fixed={false} variant="modal" bind:open={$leftDrawerOpen}>
 	<Header>
 		<DrawerTitle>Projects</DrawerTitle>
 	</Header>
