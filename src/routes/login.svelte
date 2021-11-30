@@ -32,7 +32,8 @@
 		bind:value={password}
 	/>
 
-	<Button type="submit">Submit</Button>
+	<Button type="submit">Login</Button>
+	<small>Not registered? <a href="/signup">Sign Up</a></small>
 </form>
 
 <Snackbar bind:this={snackbarWithoutClose}>
@@ -45,5 +46,10 @@
 		height: 100%;
 		row-gap: 1rem;
 		place-content: center;
+	}
+
+	small {
+		justify-self: center;
+		margin: 0;
 	}
 </style>
