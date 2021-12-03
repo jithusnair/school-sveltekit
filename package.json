@@ -1,6 +1,6 @@
 {
   "name": "taskr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -13,9 +13,9 @@
     "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
     "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
     "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
-    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
-    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
-    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags"
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version major && git push origin && git push origin --tags",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version minor && git push origin && git push origin --tags",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version patch && git push origin && git push origin --tags"
   },
   "devDependencies": {
     "@material/typography": "^13.0.0",
