@@ -30,7 +30,7 @@
 			await updateProfile($user, {
 				displayName: name
 			});
-			successMessage = 'Successfully update profile';
+			successMessage = 'Successfully updated profile';
 			snackbarWithoutClose2.open();
 		} catch (error) {
 			console.error(error);
