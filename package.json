@@ -12,10 +12,7 @@
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
     "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
-    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
-    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version major && git push origin && git push origin --tags",
-    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version minor && git push origin && git push origin --tags",
-    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m updated CHANGELOG.md && npm version patch && git push origin && git push origin --tags"
+    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
     "@material/typography": "^13.0.0",
