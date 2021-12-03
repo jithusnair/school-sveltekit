@@ -1,3 +1,10 @@
+#### 0.1.2 (2021-12-03)
+
+##### Chores
+
+*  remove release scripts from package.json and do changelog & releases manually. Also fix changelog. (d6f1c0d7)
+*  update package.json scripts and fix version not updating using release commands (1e0c25c7)
+
 #### 0.1.1 (2021-12-03)
 
 ##### Chores
