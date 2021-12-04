@@ -1,3 +1,14 @@
+#### 0.2.1 (2021-12-04)
+
+##### Bug Fixes
+
+*  notes field distorting the dialog box width (e6472921)
+*  typescript error -> notes property not in new task (a330c6ce)
+
+##### Other Changes
+
+*  List of tasks now spans both columns (ed43671b)
+
 ### 0.2.0 (2021-12-04)
 
 ##### New Features
