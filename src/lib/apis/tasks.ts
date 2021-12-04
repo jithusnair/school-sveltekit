@@ -18,6 +18,7 @@ export interface TaskDoc {
   id: string,
   name: string,
   done: boolean,
+  notes: string,
   subtasks: Array<SubTask>
 }
 

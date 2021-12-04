@@ -13,9 +13,9 @@
 
 	import { updateTask, deleteTask, TaskDoc } from '$lib/apis/tasks';
 	import { tasks } from '$lib/store/data';
-	import ProjectHeader from './ProjectHeader.svelte';
 
 	export let name = '';
+	export let notes = '';
 	export let done = false;
 	export let id = '';
 	export let subtasks = [];
@@ -27,6 +27,7 @@
 	let errorMessage = '';
 
 	let value = name;
+	let description = notes;
 	let allSubtasks = [...subtasks];
 	let newSubtask = '';
 
@@ -56,7 +57,8 @@
 		isLoading = true;
 		try {
 			let updateData: Partial<TaskDoc> = {
-				name: value
+				name: value,
+				notes: description
 			};
 			if (allSubtasks.length !== 0) {
 				updateData.subtasks = allSubtasks;
@@ -148,6 +150,7 @@
 	</Header>
 	<Content id="fullscreen-content">
 		<List>
+			<Textfield input$rows={4} input$cols={32} textarea label="Notes" bind:value={description} />
 			{#each allSubtasks as subtask, index}
 				<Item nonInteractive>
 					<Checkbox on:click={(event) => subtaskDone(event, index)} bind:checked={subtask.done} />
