@@ -45,6 +45,7 @@
 					id: docRef.id,
 					name: task,
 					done: false,
+					notes: '',
 					subtasks: []
 				},
 				...$tasks
