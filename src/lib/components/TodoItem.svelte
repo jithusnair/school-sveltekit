@@ -139,13 +139,8 @@
 </Item>
 <Separator />
 
-<Dialog
-	bind:open
-	fullscreen
-	aria-labelledby="fullscreen-title"
-	aria-describedby="fullscreen-content"
->
-	<Header>
+<Dialog bind:open aria-labelledby="fullscreen-title" aria-describedby="fullscreen-content">
+	<Header style="padding: 0 24px; margin-bottom: 16px">
 		<Textfield bind:value />
 	</Header>
 	<Content id="fullscreen-content">
