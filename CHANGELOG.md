@@ -1,3 +1,13 @@
+### 0.2.0 (2021-12-04)
+
+##### New Features
+
+*  Now one can add notes/description to a todo! (c656c1d9)
+
+##### Other Changes
+
+*  Avoid fullscreen dialog/modal as it is a bit janky in mobile. Also add some padding and margin to header. (50646ccf)
+
 #### 0.1.3 (2021-12-03)
 
 ##### Chores
