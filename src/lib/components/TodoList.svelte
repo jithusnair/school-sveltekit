@@ -80,7 +80,7 @@
 		</Fab>
 
 		{#if $tasks.length}
-			<List>
+			<List style="grid-column: 1/3">
 				{#each $tasks as task, index (task.id)}
 					<TodoItem {index} {...task} />
 				{/each}
