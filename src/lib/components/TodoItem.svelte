@@ -145,7 +145,14 @@
 	</Header>
 	<Content id="fullscreen-content">
 		<List>
-			<Textfield input$rows={4} input$cols={32} textarea label="Notes" bind:value={description} />
+			<Textfield
+				style="display: block"
+				input$rows={4}
+				input$cols={32}
+				textarea
+				label="Notes"
+				bind:value={description}
+			/>
 			{#each allSubtasks as subtask, index}
 				<Item nonInteractive>
 					<Checkbox on:click={(event) => subtaskDone(event, index)} bind:checked={subtask.done} />
