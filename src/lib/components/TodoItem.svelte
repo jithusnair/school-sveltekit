@@ -135,6 +135,7 @@
 	}
 
 	function isAllSubtaskDone() {
+		if (allSubtasks.length === 0) return false;
 		for (const subtask of allSubtasks) {
 			if (!subtask.done) return false;
 		}
