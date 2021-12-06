@@ -1,3 +1,9 @@
+#### 0.2.2 (2021-12-06)
+
+##### Bug Fixes
+
+*  edit window not clearing previous values (1ce41d21)
+
 #### 0.2.1 (2021-12-04)
 
 ##### Bug Fixes
