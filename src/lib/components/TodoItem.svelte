@@ -27,8 +27,9 @@
 	let errorMessage = '';
 
 	let value = name;
+	$: isDone = done;
 	let description = notes;
-	let allSubtasks = [...subtasks];
+	let allSubtasks = subtasks.length ? JSON.parse(JSON.stringify(subtasks)) : [];
 	let newSubtask = '';
 
 	let snackbarWithClose: SnackbarComponentDev;
@@ -39,9 +40,9 @@
 		isLoading = true;
 		try {
 			await updateTask(id, {
-				done: !done
+				done: !isDone
 			});
-			$tasks[index].done = !done;
+			$tasks[index].done = !isDone;
 			$tasks = [...$tasks];
 			isLoading = false;
 		} catch (error) {
@@ -52,24 +53,20 @@
 		}
 	}
 
-	async function editItem(event) {
-		event.stopPropagation();
+	async function editItem() {
 		isLoading = true;
 		try {
 			let updateData: Partial<TaskDoc> = {
 				name: value,
-				notes: description
+				notes: description,
+				done: isDone
 			};
-			if (allSubtasks.length !== 0) {
-				updateData.subtasks = allSubtasks;
-				if (isAllSubtaskDone()) {
-					updateData.done = true;
-				}
+			updateData.subtasks = allSubtasks;
+			if (isAllSubtaskDone()) {
+				updateData.done = true;
 			}
 			await updateTask(id, updateData);
-			$tasks[index].name = value;
-			$tasks[index].done = !!updateData.done;
-			$tasks = [...$tasks];
+			update$Tasks(updateData, index);
 			isLoading = false;
 			open = false;
 		} catch (error) {
@@ -78,6 +75,14 @@
 			errorMessage = error.message;
 			snackbarWithClose.open();
 		}
+	}
+
+	function update$Tasks(updatedData: Partial<TaskDoc>, index: number) {
+		$tasks[index].name = updatedData.name;
+		$tasks[index].done = !!updatedData.done;
+		$tasks[index].notes = updatedData.notes;
+		$tasks[index].subtasks = updatedData.subtasks;
+		$tasks = [...$tasks];
 	}
 
 	async function deleteTodo(event) {
@@ -128,10 +133,27 @@
 		}
 		return true;
 	}
+
+	function dialogCloseHandler(event) {
+		switch (event.detail.action) {
+			case 'save':
+				editItem();
+				break;
+			default:
+				// This means the user clicked the scrim, pressed
+				// cancel or pressed Esc to close the dialog.
+				value = name;
+				description = notes;
+				isDone = done;
+				allSubtasks = subtasks.length ? JSON.parse(JSON.stringify(subtasks)) : [];
+				newSubtask = '';
+				break;
+		}
+	}
 </script>
 
 <Item on:click={() => (open = true)}>
-	<Checkbox bind:checked={done} on:click={toggleDone} />
+	<Checkbox bind:checked={isDone} on:click={toggleDone} />
 	<Text>{name}</Text>
 	<Meta on:click={deleteTodo} style="color: red; cursor: pointer;" mini class="material-icons">
 		delete_outline
@@ -139,14 +161,19 @@
 </Item>
 <Separator />
 
-<Dialog bind:open aria-labelledby="fullscreen-title" aria-describedby="fullscreen-content">
+<Dialog
+	on:SMUIDialog:closed={dialogCloseHandler}
+	bind:open
+	aria-labelledby="fullscreen-title"
+	aria-describedby="fullscreen-content"
+>
 	<Header style="padding: 0 24px; margin-bottom: 16px">
 		<Textfield bind:value />
 	</Header>
 	<Content id="fullscreen-content">
 		<List>
 			<Textfield
-				style="display: block"
+				style="display: block; margin-bottom: 16px;"
 				input$rows={4}
 				input$cols={32}
 				textarea
@@ -177,7 +204,7 @@
 		<Button action="cancel">
 			<Label>Cancel</Label>
 		</Button>
-		<Button action="accept" on:click={editItem}>
+		<Button action="save">
 			<Label>Save</Label>
 		</Button>
 	</Actions>
