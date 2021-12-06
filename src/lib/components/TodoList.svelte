@@ -46,6 +46,7 @@
 					name: task,
 					done: false,
 					notes: '',
+					dueOn: null,
 					subtasks: []
 				},
 				...$tasks

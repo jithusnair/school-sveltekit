@@ -10,7 +10,7 @@ import {
   doc,
   writeBatch
 } from 'firebase/firestore';
-import type { DocumentReference, DocumentData } from '@firebase/firestore'
+import type { DocumentReference, DocumentData, Timestamp } from '@firebase/firestore'
 import { app } from '$lib/configs/firebase';
 
 
@@ -19,6 +19,7 @@ export interface TaskDoc {
   name: string,
   done: boolean,
   notes: string,
+  dueOn: Timestamp | null,
   subtasks: Array<SubTask>
 }
 

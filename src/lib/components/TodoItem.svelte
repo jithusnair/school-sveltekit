@@ -10,6 +10,8 @@
 		Label as SnackbarLabel,
 		SnackbarComponentDev
 	} from '@smui/snackbar';
+	import DateTime from './DateTime.svelte';
+	import { Timestamp } from '@firebase/firestore';
 
 	import { updateTask, deleteTask, TaskDoc } from '$lib/apis/tasks';
 	import { tasks } from '$lib/store/data';
@@ -20,17 +22,20 @@
 	export let id = '';
 	export let subtasks = [];
 	export let index = 0;
+	export let dueOn: Timestamp | null = null;
 
 	let open = false;
 
 	let isLoading = false;
 	let errorMessage = '';
+	let clear = false;
 
 	let value = name;
 	$: isDone = done;
 	let description = notes;
 	let allSubtasks = subtasks.length ? JSON.parse(JSON.stringify(subtasks)) : [];
 	let newSubtask = '';
+	let dateValue = dueOn ? dueOn.toDate() : null;
 
 	let snackbarWithClose: SnackbarComponentDev;
 
@@ -59,7 +64,8 @@
 			let updateData: Partial<TaskDoc> = {
 				name: value,
 				notes: description,
-				done: isDone
+				done: isDone,
+				dueOn: dateValue ? new Timestamp(dateValue.getTime() / 1000, 0) : null
 			};
 			updateData.subtasks = allSubtasks;
 			if (isAllSubtaskDone()) {
@@ -81,6 +87,7 @@
 		$tasks[index].name = updatedData.name;
 		$tasks[index].done = !!updatedData.done;
 		$tasks[index].notes = updatedData.notes;
+		$tasks[index].dueOn = updatedData.dueOn;
 		$tasks[index].subtasks = updatedData.subtasks;
 		$tasks = [...$tasks];
 	}
@@ -147,12 +154,19 @@
 				isDone = done;
 				allSubtasks = subtasks.length ? JSON.parse(JSON.stringify(subtasks)) : [];
 				newSubtask = '';
+				clear = true;
+				dateValue = dueOn ? dueOn.toDate() : null;
 				break;
 		}
 	}
+
+	function openEditWindow() {
+		open = true;
+		clear = false;
+	}
 </script>
 
-<Item on:click={() => (open = true)}>
+<Item on:click={openEditWindow}>
 	<Checkbox bind:checked={isDone} on:click={toggleDone} />
 	<Text>{name}</Text>
 	<Meta on:click={deleteTodo} style="color: red; cursor: pointer;" mini class="material-icons">
@@ -180,6 +194,7 @@
 				label="Notes"
 				bind:value={description}
 			/>
+			<DateTime {clear} date={dateValue} on:date={(event) => (dateValue = event.detail)} />
 			{#each allSubtasks as subtask, index}
 				<Item nonInteractive>
 					<Checkbox on:click={(event) => subtaskDone(event, index)} bind:checked={subtask.done} />
