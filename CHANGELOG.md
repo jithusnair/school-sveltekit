@@ -1,3 +1,9 @@
+#### 0.3.1 (2021-12-06)
+
+##### Bug Fixes
+
+*  clicking save on edit window of a task, which does not have subtasks, marks the task as done (4a477d3b)
+
 ### 0.3.0 (2021-12-06)
 
 ##### New Features
