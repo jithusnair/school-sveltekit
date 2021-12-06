@@ -1,3 +1,9 @@
+### 0.3.0 (2021-12-06)
+
+##### New Features
+
+*  Add due date to tasks. This is in preparation for notifications in the future (d9d84f4d)
+
 #### 0.2.2 (2021-12-06)
 
 ##### Bug Fixes
