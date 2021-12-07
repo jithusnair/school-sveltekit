@@ -1,3 +1,9 @@
+#### 0.3.2 (2021-12-07)
+
+##### Bug Fixes
+
+*  add css for date picker (previously forgot to include) (6543f128)
+
 #### 0.3.1 (2021-12-06)
 
 ##### Bug Fixes
