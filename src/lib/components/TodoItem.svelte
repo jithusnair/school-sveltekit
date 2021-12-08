@@ -21,7 +21,6 @@
 	export let done = false;
 	export let id = '';
 	export let subtasks = [];
-	export let index = 0;
 	export let dueOn: Timestamp | null = null;
 
 	let open = false;
@@ -47,6 +46,7 @@
 			await updateTask(id, {
 				done: !isDone
 			});
+			let index = indexFromTaskId(id);
 			$tasks[index].done = !isDone;
 			$tasks = [...$tasks];
 			isLoading = false;
@@ -72,6 +72,7 @@
 				updateData.done = true;
 			}
 			await updateTask(id, updateData);
+			let index = indexFromTaskId(id);
 			update$Tasks(updateData, index);
 			isLoading = false;
 			open = false;
@@ -97,6 +98,7 @@
 		isLoading = true;
 		try {
 			await deleteTask(id);
+			let index = indexFromTaskId(id);
 			$tasks.splice(index, 1);
 			$tasks = [...$tasks];
 			isLoading = false;
@@ -159,6 +161,13 @@
 				dateValue = dueOn ? dueOn.toDate() : null;
 				break;
 		}
+	}
+
+	function indexFromTaskId(id: String): number | null {
+		for (let index = 0; index < $tasks.length; index++) {
+			if ($tasks[index].id === id) return index;
+		}
+		return null;
 	}
 
 	function openEditWindow() {

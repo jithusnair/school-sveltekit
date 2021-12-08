@@ -29,6 +29,8 @@
     "@smui/ripple": "^6.0.0-beta.4",
     "@smui/snackbar": "^6.0.0-beta.3",
     "@smui/switch": "^6.0.0-beta.4",
+    "@smui/tab": "^6.0.0-beta.4",
+    "@smui/tab-bar": "^6.0.0-beta.4",
     "@smui/textfield": "^6.0.0-beta.3",
     "@smui/top-app-bar": "^6.0.0-beta.4",
     "@sveltejs/adapter-auto": "next",
