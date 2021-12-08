@@ -1,3 +1,9 @@
+#### 0.4.2 (2021-12-08)
+
+##### Other Changes
+
+*  scrolling in profile page started from the top of the page which is unnecessary. Only the template container needs overflow. (8e5e2089)
+
 #### 0.4.1 (2021-12-08)
 
 ##### Bug Fixes
