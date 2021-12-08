@@ -1,3 +1,9 @@
+### 0.4.0 (2021-12-08)
+
+##### New Features
+
+*  add a filtered view of tasks. Now all tasks in a project are displayed under 'Upcoming', 'Completed', and 'All Tasks' (4989572a)
+
 #### 0.3.2 (2021-12-07)
 
 ##### Bug Fixes
