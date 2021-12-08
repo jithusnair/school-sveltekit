@@ -88,7 +88,7 @@
 		// first filter tasks not done
 		let tasksNotDone = allTasks.filter((task) => !task.done);
 		let upcomingTasks = tasksNotDone.sort((a, b) => {
-			if (a.dueOn && b.dueOn) return b.dueOn.seconds - a.dueOn.seconds;
+			if (a.dueOn && b.dueOn) return a.dueOn.seconds - b.dueOn.seconds;
 			else if (!a.dueOn) return 1;
 			else if (!b.dueOn) return -1;
 			else return 0;
