@@ -93,7 +93,8 @@
 	div {
 		margin: 0 auto;
 		padding: 0 32px;
-		max-width: 500px;
+		height: calc(100% - 64px);
+		overflow-y: scroll;
 	}
 
 	h1 {
@@ -104,10 +105,22 @@
 	form {
 		display: grid;
 		row-gap: 1rem;
+		margin: 0 auto;
+	}
+
+	form,
+	hr {
+		max-width: 500px;
 	}
 
 	h2 {
 		font-size: 1.5rem;
 		text-align: center;
+	}
+
+	@media only screen and (max-width: 599px) {
+		div {
+			height: calc(100vh - 56px);
+		}
 	}
 </style>
