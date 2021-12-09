@@ -20,7 +20,7 @@ export interface TaskDoc {
   done: boolean,
   notes: string,
   dueOn: Timestamp | null,
-  subtasks: Array<SubTask>
+  subtasks?: Array<SubTask>
 }
 
 interface TaskPost {
