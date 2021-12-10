@@ -42,7 +42,16 @@
 	}
 
 	async function fetchTasks(projects) {
-		$tasks = await getTasks(projects[$selectedProjectIndex].id);
+		let fetchedTasks = await getTasks(projects[$selectedProjectIndex].id);
+		$tasks = fetchedTasks.map((task) => {
+			if (!task.subtasks.length) return task;
+			let countDone = 0;
+			for (const subtask of task.subtasks) {
+				if (subtask.done) countDone++;
+			}
+			task.subtasksDoneCount = countDone;
+			return task;
+		});
 	}
 
 	async function addTask() {
@@ -124,7 +133,7 @@
 		</TabBar>
 
 		{#if active === tabs[0]}
-			<List style="grid-column: 1/3">
+			<List twoLine style="grid-column: 1/3">
 				{#each upcomingTasks as task, index (task.id)}
 					<TodoItem {...task} />
 				{:else}
@@ -139,7 +148,7 @@
 				{/each}
 			</List>
 		{:else if active === tabs[1]}
-			<List style="grid-column: 1/3">
+			<List twoLine style="grid-column: 1/3">
 				{#each completedTasks as task, index (task.id)}
 					<TodoItem {...task} />
 				{:else}
@@ -154,7 +163,7 @@
 				{/each}
 			</List>
 		{:else}
-			<List style="grid-column: 1/3">
+			<List twoLine style="grid-column: 1/3">
 				{#each $tasks as task, index (task.id)}
 					<TodoItem {...task} />
 				{:else}

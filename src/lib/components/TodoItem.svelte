@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Checkbox from '@smui/checkbox';
 	import Dialog, { Header, Title, Content, Actions } from '@smui/dialog';
-	import List, { Item, Text, Separator, Meta } from '@smui/list';
+	import List, { Item, Separator, Meta, Text, PrimaryText, SecondaryText } from '@smui/list';
 	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
 	import IconButton from '@smui/icon-button';
@@ -22,6 +22,7 @@
 	export let id = '';
 	export let subtasks = [];
 	export let dueOn: Timestamp | null = null;
+	export let subtasksDoneCount: number | null = null;
 
 	let open = false;
 
@@ -35,6 +36,7 @@
 	let allSubtasks = subtasks.length ? JSON.parse(JSON.stringify(subtasks)) : [];
 	let newSubtask = '';
 	let dateValue = dueOn ? dueOn.toDate() : null;
+	$: doneCountValue = subtasksDoneCount;
 
 	let snackbarWithClose: SnackbarComponentDev;
 
@@ -68,8 +70,12 @@
 				dueOn: dateValue ? new Timestamp(dateValue.getTime() / 1000, 0) : null
 			};
 			updateData.subtasks = allSubtasks;
-			if (isAllSubtaskDone()) {
+			let checkSubtasks = isAllSubtaskDoneAndCountDone();
+			if (checkSubtasks !== null && checkSubtasks.allSubtasksDone) {
 				updateData.done = true;
+				updateData.subtasksDoneCount = checkSubtasks.countSubtasksDone;
+			} else if (checkSubtasks !== null && !checkSubtasks.allSubtasksDone) {
+				updateData.subtasksDoneCount = checkSubtasks.countSubtasksDone;
 			}
 			await updateTask(id, updateData);
 			let index = indexFromTaskId(id);
@@ -90,6 +96,7 @@
 		$tasks[index].notes = updatedData.notes;
 		$tasks[index].dueOn = updatedData.dueOn;
 		$tasks[index].subtasks = updatedData.subtasks;
+		$tasks[index].subtasksDoneCount = updatedData.subtasksDoneCount;
 		$tasks = [...$tasks];
 	}
 
@@ -136,12 +143,18 @@
 		event.stopPropagation();
 	}
 
-	function isAllSubtaskDone() {
-		if (allSubtasks.length === 0) return false;
+	function isAllSubtaskDoneAndCountDone(): {
+		allSubtasksDone: boolean;
+		countSubtasksDone: number;
+	} | null {
+		let allSubtasksDone = true;
+		let countSubtasksDone = 0;
+		if (allSubtasks.length === 0) return null;
 		for (const subtask of allSubtasks) {
-			if (!subtask.done) return false;
+			if (subtask.done) countSubtasksDone++;
+			if (!subtask.done) allSubtasksDone = false;
 		}
-		return true;
+		return { allSubtasksDone, countSubtasksDone };
 	}
 
 	function dialogCloseHandler(event) {
@@ -178,7 +191,18 @@
 
 <Item on:click={openEditWindow}>
 	<Checkbox bind:checked={isDone} on:click={toggleDone} />
-	<Text>{name}</Text>
+	<Text>
+		<PrimaryText>
+			{name}
+		</PrimaryText>
+		<SecondaryText style={`${!allSubtasks.length ? 'opacity: 0.4' : ''}`}>
+			{#if allSubtasks.length}
+				{doneCountValue} of {allSubtasks.length}
+			{:else}
+				0 subtasks
+			{/if}
+		</SecondaryText>
+	</Text>
 	<Meta on:click={deleteTodo} style="color: red; cursor: pointer;" mini class="material-icons">
 		delete_outline
 	</Meta>

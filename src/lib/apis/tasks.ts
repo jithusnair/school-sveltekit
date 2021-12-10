@@ -21,6 +21,7 @@ export interface TaskDoc {
   notes: string,
   dueOn: Timestamp | null,
   subtasks?: Array<SubTask>
+  subtasksDoneCount?: number
 }
 
 interface TaskPost {
