@@ -1,3 +1,13 @@
+### 0.5.0 (2021-12-10)
+
+##### New Features
+
+*  Show subtask completion count directly in list of tasks. (145c994d)
+
+##### Other Changes
+
+*  Fix task interface. Subtasks array should be optional (5ca6abc7)
+
 #### 0.4.2 (2021-12-08)
 
 ##### Other Changes
