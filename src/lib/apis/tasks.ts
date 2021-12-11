@@ -22,6 +22,7 @@ export interface TaskDoc {
   dueOn: Timestamp | null,
   subtasks?: Array<SubTask>
   subtasksDoneCount?: number
+  color?: string
 }
 
 interface TaskPost {

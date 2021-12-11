@@ -11,6 +11,7 @@
 		SnackbarComponentDev
 	} from '@smui/snackbar';
 	import DateTime from './DateTime.svelte';
+	import ColorPicker from './ColorPicker.svelte';
 	import { Timestamp } from '@firebase/firestore';
 
 	import { updateTask, deleteTask, TaskDoc } from '$lib/apis/tasks';
@@ -23,6 +24,7 @@
 	export let subtasks = [];
 	export let dueOn: Timestamp | null = null;
 	export let subtasksDoneCount: number | null = null;
+	export let color = '';
 
 	let open = false;
 
@@ -37,6 +39,7 @@
 	let newSubtask = '';
 	let dateValue = dueOn ? dueOn.toDate() : null;
 	$: doneCountValue = subtasksDoneCount;
+	let colorValue = color;
 
 	let snackbarWithClose: SnackbarComponentDev;
 
@@ -67,7 +70,8 @@
 				name: value,
 				notes: description,
 				done: isDone,
-				dueOn: dateValue ? new Timestamp(dateValue.getTime() / 1000, 0) : null
+				dueOn: dateValue ? new Timestamp(dateValue.getTime() / 1000, 0) : null,
+				color: colorValue || ''
 			};
 			updateData.subtasks = allSubtasks;
 			let checkSubtasks = isAllSubtaskDoneAndCountDone();
@@ -97,6 +101,7 @@
 		$tasks[index].dueOn = updatedData.dueOn;
 		$tasks[index].subtasks = updatedData.subtasks;
 		$tasks[index].subtasksDoneCount = updatedData.subtasksDoneCount;
+		$tasks[index].color = updatedData.color;
 		$tasks = [...$tasks];
 	}
 
@@ -172,6 +177,7 @@
 				newSubtask = '';
 				clear = true;
 				dateValue = dueOn ? dueOn.toDate() : null;
+				colorValue = color;
 				break;
 		}
 	}
@@ -189,7 +195,10 @@
 	}
 </script>
 
-<Item on:click={openEditWindow}>
+<Item
+	style={`border-left: ${colorValue ? '16px solid ' + colorValue : '16px solid transparent'};`}
+	on:click={openEditWindow}
+>
 	<Checkbox bind:checked={isDone} on:click={toggleDone} />
 	<Text>
 		<PrimaryText>
@@ -211,12 +220,15 @@
 
 <Dialog
 	on:SMUIDialog:closed={dialogCloseHandler}
+	scrimClickAction=""
+	escapeKeyAction=""
 	bind:open
 	aria-labelledby="fullscreen-title"
 	aria-describedby="fullscreen-content"
 >
-	<Header style="padding: 0 24px; margin-bottom: 16px">
+	<Header class="header" style={`border-top: ${colorValue ? '16px solid ' + colorValue : ''}`}>
 		<Textfield bind:value />
+		<ColorPicker value={colorValue} on:select={(event) => (colorValue = event.detail)} />
 	</Header>
 	<Content id="fullscreen-content">
 		<List>
@@ -267,5 +279,11 @@
 </Snackbar>
 
 <style>
-	/* your styles go here */
+	:global(.header) {
+		padding: 0 24px;
+		margin-bottom: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: end;
+	}
 </style>
