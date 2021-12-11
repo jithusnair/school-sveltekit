@@ -1,3 +1,9 @@
+### 0.6.0 (2021-12-11)
+
+##### New Features
+
+*  add color labels to todos. (5dd96f85)
+
 ### 0.5.0 (2021-12-10)
 
 ##### New Features
